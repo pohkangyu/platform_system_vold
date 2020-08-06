@@ -108,16 +108,20 @@ status_t EmulatedVolume::doMount() {
     }
 
     nsecs_t start = systemTime(SYSTEM_TIME_BOOTTIME);
-    while (before == GetDevice(mFuseFull)) {
-        LOG(DEBUG) << "Waiting for FUSE to spin up...";
-        usleep(50000);  // 50ms
 
-        nsecs_t now = systemTime(SYSTEM_TIME_BOOTTIME);
-        if (nanoseconds_to_milliseconds(now - start) > 5000) {
-            LOG(WARNING) << "Timed out while waiting for FUSE to spin up";
-            return -ETIMEDOUT;
-        }
-    }
+
+ //   while (before == GetDevice(mFuseFull)) {
+ //       LOG(DEBUG) << "Waiting for FUSE to spin up...";
+ //       usleep(50000);  // 50ms
+
+//        nsecs_t now = systemTime(SYSTEM_TIME_BOOTTIME);
+//        if (nanoseconds_to_milliseconds(now - start) > 5000) {
+//            LOG(WARNING) << "Timed out while waiting for FUSE to spin up";
+//            return -ETIMEDOUT;
+//        }
+//    }
+
+
     /* sdcardfs will have exited already. FUSE will still be running */
     TEMP_FAILURE_RETRY(waitpid(mFusePid, nullptr, 0));
     mFusePid = 0;
